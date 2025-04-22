@@ -83,6 +83,26 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.boton {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.boton:active {
+  transform: scale(0.9);
+}
+
+#puntuacion {
+  padding: 3rem;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+  
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/src/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Juego de Cartas</title>
   </head>
+
   <body>
+
     <div id="app">
-      <h1>TypeScript Sandbox</h1>
+
+      <h1>Juego de las siete media</h1>
+
+      <img src="/src/images/back.jpg" alt="Carta del juego" />
+      
+      <div class="botones">
+        <button class="boton" id="mostrar-puntuacion">Mostrar Puntuación</button>
+        <button class="boton" id="dame-carta">Dame Carta</button>
+        <button class="boton" id="mostrar-carta">Mostrar Carta</button>
+      </div>
+
+      <div id="puntuacion"></div>
+      <div class="botones">
+        <button class="boton" id="me-planto">Me Planto</button>
+        <button class="boton" id="nueva-partida">Nueva Partida</button>
+      </div>
+
     </div>
+
     <script type="module" src="/src/main.ts"></script>
+
   </body>
+
 </html>
