@@ -51,7 +51,7 @@ const obtenerUrlCarta = (carta:number):string => {
 
     switch (carta) {
         case 1:
-            return '/src/images/1_as-copas.jgg';
+            return '/src/images/1_as-copas.jpg';
         case 2:
             return '/src/images/2_dos-copas.jpg';
         case 3:
@@ -123,11 +123,11 @@ const mePlanto = (puntosTotales:number) => {
         } else if (puntosTotales === 5) {
             mostrarMensaje("Te ha entrado el canguelo, ¿eh?");
             botonesInactivos();
-        } else if (puntosTotales > 5 && puntosTotales < 7) {
+        } else if (puntosTotales > 5 && puntosTotales <= 7) {
             mostrarMensaje("Casi casi...");
             botonesInactivos();
         } else if (puntosTotales === 7.5) {
-            mostrarMensaje("¡Lo has clavado!¡Enhorabuena!");
+            mostrarMensaje("¡Lo has clavado! ¡Enhorabuena!");
             botonesInactivos();
         }
     }
@@ -135,6 +135,8 @@ const mePlanto = (puntosTotales:number) => {
 
 const nuevaPartida = () => {
     puntos = 0;
+    mostrarPuntuacion(puntos);
+    mostrarCarta("/src/images/back.jpg");
     mostrarMensaje("");
     botonesActivos();
 }
@@ -154,11 +156,8 @@ if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
 }
 
 if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
-    botonMePlanto.addEventListener("click", () => {
-        const carta = numeroAleatorio();
-        const puntosSumados = sumarPuntos(carta)
-        const puntosTotales = puntosSumados;
-        mePlanto(puntosTotales);
+    botonMePlanto.addEventListener("click", () => { 
+        mePlanto(puntos);
     })
 }
 
