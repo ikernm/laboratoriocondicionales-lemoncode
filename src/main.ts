@@ -117,7 +117,7 @@ const gameOver = (puntosTotales:number) => {
 
 const mePlanto = (puntosTotales:number) => {
     if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
-        if (puntosTotales < 4) {
+        if (puntosTotales < 5) {
             mostrarMensaje("Has sido muy conservador.");
             botonesInactivos();
         } else if (puntosTotales === 5) {
