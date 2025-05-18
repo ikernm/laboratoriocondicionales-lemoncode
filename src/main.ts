@@ -141,6 +141,20 @@ const nuevaPartida = () => {
     botonesActivos();
 }
 
+const ocultarBotones = () => {
+    if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement &&
+        botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
+            botonDameCarta.style.display = "none";
+            botonMePlanto.style.display = "none";
+    }
+    
+}
+
+const botonProbar = document.createElement("button");
+botonProbar.textContent = "¿Quieres seguir probando?";
+botonProbar.classList.add("botonProbar");
+botonProbar.id="boton-probar";
+
 if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
     botonDameCarta.addEventListener("click", () => {
         const carta = numeroAleatorio();
@@ -158,6 +172,7 @@ if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
 if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
     botonMePlanto.addEventListener("click", () => { 
         mePlanto(puntos);
+        ocultarBotones();
     })
 }
 
