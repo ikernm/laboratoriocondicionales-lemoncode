@@ -141,6 +141,7 @@ const nuevaPartida = () => {
     botonesActivos();
 }
 
+/*
 const ocultarBotones = () => {
     if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement &&
         botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
@@ -149,11 +150,12 @@ const ocultarBotones = () => {
     }
     
 }
+*/
 
-const botonProbar = document.createElement("button");
-botonProbar.textContent = "¿Quieres seguir probando?";
-botonProbar.classList.add("botonProbar");
-botonProbar.id="boton-probar";
+//const botonProbar = document.createElement("button");
+//botonProbar.textContent = "¿Quieres seguir probando?";
+//botonProbar.classList.add("botonProbar");
+//botonProbar.id="boton-probar";
 
 if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
     botonDameCarta.addEventListener("click", () => {
@@ -172,7 +174,7 @@ if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
 if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
     botonMePlanto.addEventListener("click", () => { 
         mePlanto(puntos);
-        ocultarBotones();
+       // ocultarBotones();
     })
 }
 
