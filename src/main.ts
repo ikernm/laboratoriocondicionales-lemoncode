@@ -141,7 +141,7 @@ const nuevaPartida = () => {
     botonesActivos();
 }
 
-/*
+
 const ocultarBotones = () => {
     if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement &&
         botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
@@ -149,13 +149,17 @@ const ocultarBotones = () => {
             botonMePlanto.style.display = "none";
     }
     
-}
-*/
+}   
 
-//const botonProbar = document.createElement("button");
-//botonProbar.textContent = "¿Quieres seguir probando?";
-//botonProbar.classList.add("botonProbar");
-//botonProbar.id="boton-probar";
+const botonProbar = document.createElement("button");
+botonProbar.textContent = "¿Quieres seguir probando?";
+botonProbar.classList.add("botonProbar");
+botonProbar.id="boton-probar";
+
+const contenedorBotones = document.querySelector(".botones");
+if (contenedorBotones && contenedorBotones instanceof HTMLDivElement) {
+    contenedorBotones.appendChild(botonProbar);
+}
 
 if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
     botonDameCarta.addEventListener("click", () => {
@@ -174,7 +178,7 @@ if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
 if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
     botonMePlanto.addEventListener("click", () => { 
         mePlanto(puntos);
-       // ocultarBotones();
+        ocultarBotones();
     })
 }
 
@@ -183,3 +187,14 @@ if (botonNuevaPartida && botonNuevaPartida instanceof HTMLButtonElement) {
         nuevaPartida();
     })
 }
+
+if (botonProbar && botonProbar instanceof HTMLButtonElement) {
+    botonProbar.addEventListener("click", () => {
+        const carta = numeroAleatorio();
+        const urlCarta = obtenerUrlCarta(carta);
+        mostrarCarta(urlCarta);
+        const puntosSimulados = sumarPuntos(carta);
+        mostrarMensaje(`La siguiente carta sería un ${carta} y habrías llegado a ${puntosSimulados} puntos.`);
+        botonProbar.disabled = true; 
+    });
+};
