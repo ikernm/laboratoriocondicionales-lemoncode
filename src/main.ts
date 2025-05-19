@@ -141,7 +141,6 @@ const nuevaPartida = () => {
     botonesActivos();
 }
 
-
 const ocultarBotones = () => {
     if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement &&
         botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
@@ -153,10 +152,16 @@ const ocultarBotones = () => {
 
 const botonProbar = document.createElement("button");
 botonProbar.textContent = "¿Quieres seguir probando?";
-botonProbar.classList.add("botonProbar");
+botonProbar.classList.add("boton");
 botonProbar.id="boton-probar";
-
 const contenedorBotones = document.querySelector(".botones");
+
+const activarBotonProbar = () => {
+    if (botonProbar && botonProbar instanceof HTMLButtonElement) {
+        botonProbar.style.display = "block";
+    }
+}
+
 if (contenedorBotones && contenedorBotones instanceof HTMLDivElement) {
     contenedorBotones.appendChild(botonProbar);
 }
@@ -179,6 +184,7 @@ if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
     botonMePlanto.addEventListener("click", () => { 
         mePlanto(puntos);
         ocultarBotones();
+        activarBotonProbar();
     })
 }
 
@@ -198,3 +204,7 @@ if (botonProbar && botonProbar instanceof HTMLButtonElement) {
         botonProbar.disabled = true; 
     });
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+    botonProbar.style.display = "none";
+})
