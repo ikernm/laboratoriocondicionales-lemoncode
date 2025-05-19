@@ -110,6 +110,11 @@ button:focus-visible {
   padding: 3rem;
   font-size: 1em;
   font-weight: bold;
+  color: #ffffff;
+}
+
+#mensaje {
+  color: #ffffff;
 }
 
 .oculto {

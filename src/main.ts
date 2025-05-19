@@ -133,22 +133,21 @@ const mePlanto = (puntosTotales:number) => {
     }
 }
 
-const nuevaPartida = () => {
-    puntos = 0;
-    mostrarPuntuacion(puntos);
-    mostrarCarta("/src/images/back.jpg");
-    mostrarMensaje("");
-    botonesActivos();
-}
-
-const ocultarBotones = () => {
+const ocultarBotonesPrincipales = () => {
     if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement &&
         botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
             botonDameCarta.style.display = "none";
             botonMePlanto.style.display = "none";
     }
-    
-}   
+}
+
+const activarBotonesPrincipales = () => {
+    if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement &&
+        botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
+            botonDameCarta.style.display = "block";
+            botonMePlanto.style.display = "block";
+    }
+}
 
 const botonProbar = document.createElement("button");
 botonProbar.textContent = "¿Quieres seguir probando?";
@@ -160,6 +159,22 @@ const activarBotonProbar = () => {
     if (botonProbar && botonProbar instanceof HTMLButtonElement) {
         botonProbar.style.display = "block";
     }
+}
+
+const ocultarBotonProbar = () => {
+    if (botonProbar && botonProbar instanceof HTMLButtonElement) {
+        botonProbar.style.display = "none";
+    }
+}
+
+const nuevaPartida = () => {
+    puntos = 0;
+    mostrarPuntuacion(puntos);
+    mostrarCarta("/src/images/back.jpg");
+    mostrarMensaje("");
+    botonesActivos();
+    activarBotonesPrincipales();
+    ocultarBotonProbar();
 }
 
 if (contenedorBotones && contenedorBotones instanceof HTMLDivElement) {
@@ -183,7 +198,7 @@ if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
 if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
     botonMePlanto.addEventListener("click", () => { 
         mePlanto(puntos);
-        ocultarBotones();
+        ocultarBotonesPrincipales();
         activarBotonProbar();
     })
 }
