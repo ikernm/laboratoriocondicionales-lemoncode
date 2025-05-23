@@ -59,9 +59,9 @@ const sumarPuntos = (puntosCarta:number):number => {
     */
 }
 
-const mostrarPuntuacion = (puntosTotales:number) => {
+const mostrarPuntuacion = (puntos:number) => {
     if (elementoPuntuacion && elementoPuntuacion instanceof HTMLDivElement) {
-        elementoPuntuacion.innerHTML = puntosTotales.toString();
+        elementoPuntuacion.innerHTML = puntos.toString();
     }
 }
 
