@@ -7,6 +7,7 @@ const elementoPuntuacion = document.getElementById("puntuacion");
 const elementoImagen = document.getElementById("carta");
 const elementoMensaje = document.getElementById("mensaje");
 
+/*
 const numeroAleatorio = (): number => {
     const carta = Math.floor (Math.random() * 10) + 1;
         if (carta > 7) {
@@ -14,12 +15,32 @@ const numeroAleatorio = (): number => {
         }
     return carta;
 }
+*/
+const dameNumeroAleatorio = () => {
+    return Math.floor (Math.random() * 10) + 1;
+}
+
+const dameNumeroCarta = (numeroAleatorio: number): number => {
+    if (numeroAleatorio > 7) {
+        return numeroAleatorio + 2;
+    }
+    return numeroAleatorio; 
+}
 
 let puntos = 0;
 
-const sumarPuntos = (carta:number):number => {
+const damePuntosCarta = (carta: number): number => {
+    if (carta > 7) {
+        return 0.5;
+    } else {
+        return carta;
+    }
+}
 
-    switch (carta) {
+const sumarPuntos = (puntosCarta:number):number => {
+
+    return puntos + puntosCarta;
+   /* switch (carta) {
         case 1:
         case 2:
         case 3:
@@ -35,6 +56,7 @@ const sumarPuntos = (carta:number):number => {
         default:
             return puntos +0;       
     }
+    */
 }
 
 const mostrarPuntuacion = (puntosTotales:number) => {
@@ -105,18 +127,39 @@ const botonesActivos = () => {
     }
 }
 
-const gameOver = (puntosTotales:number) => {
-    if (puntosTotales === 7.5) {
+const gameOver = () => {
+    if (puntos === 7.5) {
         mostrarMensaje("¡¡Has ganado🎉🎉!!");
         botonesInactivos();
-    } else if (puntosTotales > 7.5) {
-        mostrarMensaje("Has obtenido " + puntosTotales + " puntos. Has perdido🫣");
+    } else if (puntos > 7.5) {
+        mostrarMensaje("Has obtenido " + puntos + " puntos. Has perdido🫣");
         botonesInactivos();
     }
 }
 
-const mePlanto = (puntosTotales:number) => {
-    if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
+const dameMensajeCuandoMePlanto = (puntos: number) => {
+    if (puntos < 5) {
+        return "Has sido muy conservador.";
+    } else if (puntos === 5) {
+        return "Te ha entrado el canguelo, ¿eh?";
+    } else if (puntos > 5 && puntos <= 7) {
+        return "Casi casi...";
+    } else if (puntos === 7.5) {
+        return "¡Lo has clavado! ¡Enhorabuena!";
+    } else {
+        return "error!";
+    }
+}
+
+
+const mePlanto = () => {  
+    const mensaje = dameMensajeCuandoMePlanto(puntos);
+    mostrarMensaje(mensaje);
+    botonesInactivos();
+    ocultarBotonesPrincipales();
+    activarBotonProbar();
+
+    /*if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
         if (puntosTotales < 5) {
             mostrarMensaje("Has sido muy conservador.");
             botonesInactivos();
@@ -131,6 +174,7 @@ const mePlanto = (puntosTotales:number) => {
             botonesInactivos();
         }
     }
+    */
 }
 
 const ocultarBotonesPrincipales = () => {
@@ -149,26 +193,26 @@ const activarBotonesPrincipales = () => {
     }
 }
 
-const botonProbar = document.createElement("button");
-botonProbar.textContent = "¿Quieres seguir probando?";
-botonProbar.classList.add("boton");
-botonProbar.id="boton-probar";
+
 const contenedorBotones = document.querySelector(".botones");
 
 const activarBotonProbar = () => {
+    const botonProbar = document.getElementById('boton-probar');
     if (botonProbar && botonProbar instanceof HTMLButtonElement) {
         botonProbar.style.display = "block";
     }
 }
 
 const ocultarBotonProbar = () => {
+    const botonProbar = document.getElementById('boton-probar');
     if (botonProbar && botonProbar instanceof HTMLButtonElement) {
         botonProbar.style.display = "none";
     }
 }
 
 const nuevaPartida = () => {
-    puntos = 0;
+    // puntos = 0;
+    actualizarPuntos(0);
     mostrarPuntuacion(puntos);
     mostrarCarta("/src/images/back.jpg");
     mostrarMensaje("");
@@ -177,29 +221,27 @@ const nuevaPartida = () => {
     ocultarBotonProbar();
 }
 
-if (contenedorBotones && contenedorBotones instanceof HTMLDivElement) {
-    contenedorBotones.appendChild(botonProbar);
+const dameCarta = () => {
+    const numeroAleatorio = dameNumeroAleatorio();
+    const carta = dameNumeroCarta(numeroAleatorio);
+    const urlCarta = obtenerUrlCarta(carta);
+    mostrarCarta(urlCarta);
+    const puntosCarta = damePuntosCarta(carta)
+    const puntosSumados = sumarPuntos(puntosCarta);
+    actualizarPuntos(puntosSumados);
+    mostrarPuntuacion(puntosSumados);
+    gameOver();
 }
 
 if (botonDameCarta && botonDameCarta instanceof HTMLButtonElement) {
     botonDameCarta.addEventListener("click", () => {
-        const carta = numeroAleatorio();
-        obtenerUrlCarta(carta);
-        const urlCarta = obtenerUrlCarta(carta);
-        mostrarCarta(urlCarta)
-        const puntosSumados = sumarPuntos(carta);
-        actualizarPuntos(puntosSumados);
-        mostrarPuntuacion(puntosSumados);
-        const puntosTotales = puntosSumados;
-        gameOver(puntosTotales);
+        dameCarta();
     })
 }
 
 if (botonMePlanto && botonMePlanto instanceof HTMLButtonElement) {
     botonMePlanto.addEventListener("click", () => { 
-        mePlanto(puntos);
-        ocultarBotonesPrincipales();
-        activarBotonProbar();
+        mePlanto();
     })
 }
 
@@ -209,17 +251,34 @@ if (botonNuevaPartida && botonNuevaPartida instanceof HTMLButtonElement) {
     })
 }
 
-if (botonProbar && botonProbar instanceof HTMLButtonElement) {
-    botonProbar.addEventListener("click", () => {
-        const carta = numeroAleatorio();
-        const urlCarta = obtenerUrlCarta(carta);
-        mostrarCarta(urlCarta);
-        const puntosSimulados = sumarPuntos(carta);
-        mostrarMensaje(`La siguiente carta sería un ${carta} y habrías llegado a ${puntosSimulados} puntos.`);
-        botonProbar.disabled = true; 
-    });
-};
+const probar = () => {
+    const numeroAleatorio = dameNumeroAleatorio();
+    const carta = dameNumeroCarta(numeroAleatorio);
+    const urlCarta = obtenerUrlCarta(carta);
+    mostrarCarta(urlCarta);
+    const puntosSimulados = sumarPuntos(carta);
+    mostrarMensaje(`La siguiente carta sería un ${carta} y habrías llegado a ${puntosSimulados} puntos.`);
+
+    const botonProbar = document.getElementById('boton-probar')
+    if (botonProbar && botonProbar instanceof HTMLButtonElement) {
+        botonProbar.disabled = true;
+    }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+    const botonProbar = document.createElement("button");
+    botonProbar.textContent = "¿Quieres seguir probando?";
+    botonProbar.classList.add("boton");
+    botonProbar.id = "boton-probar";
     botonProbar.style.display = "none";
+
+    if (contenedorBotones && contenedorBotones instanceof HTMLDivElement) {
+        contenedorBotones.appendChild(botonProbar);
+    }
+
+    if (botonProbar && botonProbar instanceof HTMLButtonElement) {
+        botonProbar.addEventListener("click", () => {
+            probar();
+        });
+    };
 })
